@@ -34,21 +34,22 @@
   }
 </script>
 
-<style lang="scss" scoped>  
+<style lang="scss" scoped>
+  @import '../theme/var.scss';
   section{    
     height: 100%;
   }
   header{
     padding: 0 !important;
     height: auto !important;
-    background-color: #fff !important;
+    background-color: $--color-item-other !important;
   }
   main{
-    background-color: #f9f9f9;
+    background-color:$--color-background;
     height: 100%;
   } 
   .ant-spin-nested-loading {
-    background-color: #2e3140;
+    background-color:$--color-loading;
   }
   .ant-spin-nested-loading,
   .ant-spin-nested-loading ::v-deep .ant-spin-container{
