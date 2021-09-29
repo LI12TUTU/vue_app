@@ -6,9 +6,18 @@
       @touchend="move(item)" :class="{slider:item.isShow}">
         <a-radio>{{item.name}}</a-radio>
         <a-icon type="right"></a-icon>
-        <a-button type="danger" @click="deleteItem(index)">
-          删除
-        </a-button>
+        <a-popconfirm
+          placement="top"
+          title="确认删除吗？"
+          ok-text="确定"
+          cancel-text="取消"
+          @confirm="confirm(index)"
+          @cancel="cancel(item)"
+        >
+          <a-button type="danger" @click="click()">
+            Remove
+          </a-button>
+        </a-popconfirm>
       </li>
     </ul>
   </div>
@@ -18,7 +27,8 @@
   export default {
     data () {
       return {
-        title: '111',
+        title: this.$route.params.title,
+        isClick: false,
         items:[
         {
           id:1,
@@ -48,13 +58,28 @@
       }
     },
     methods: {
-      move(item) {
+      move(item) {       
         setTimeout(() => {
-          item.isShow = !item.isShow
-        },0)       
+          if(this.isClick){
+            this.isClick = false
+            item.isShow = true
+          }else{
+            item.isShow = !item.isShow
+          }           
+        },0)             
       },
-      deleteItem(index) {
+      click(){
+        this.isClick = !this.isClick;
+      },
+      confirm(index) {
+        this.isClick = false;
         this.items.splice(index,1)
+        this.$message.success("删除成功")
+      },
+      cancel(item) {
+        item.isShow = false
+        this.isClick = false;
+        this.$message.error("删除失败")
       }
     },
   }
@@ -67,8 +92,7 @@
     line-height: (100rem/40);
     text-indent: 1rem;
     font-size: 0.8rem;
-    color: $--color-title;
-    // font-weight: bolder;
+    color: $--color-title; 
   }
   .title {
     @include style;
@@ -79,7 +103,8 @@
     padding: 0;
     li {
       @include style;
-      // text-indent: 1.5rem;
+      font-weight: bolder;
+      /* text-indent: 1.5rem; */
       position: relative;
       left:0;
       background-color: #fff;
