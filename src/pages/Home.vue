@@ -47,6 +47,7 @@
   main{
     background-color:$--color-background;
     height: 100%;
+    overflow: auto;
   } 
   .ant-spin-nested-loading {
     background-color:$--color-loading;
